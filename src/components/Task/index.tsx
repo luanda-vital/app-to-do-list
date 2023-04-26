@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { View, TouchableHighlight } from "react-native";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import { Feather } from '@expo/vector-icons';

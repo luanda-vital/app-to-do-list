@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { View, Text, Image, TextInput, TouchableOpacity, FlatList, TouchableHighlight, Alert } from 'react-native';
+import { View, Text, Image, TextInput, FlatList, TouchableHighlight, Alert } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { styles } from './styles';
 import { Task } from '../../components/Task';
