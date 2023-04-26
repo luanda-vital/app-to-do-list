@@ -25,6 +25,10 @@ export const styles = StyleSheet.create({
     color: '#fdfcfe',
     fontSize: 14
   },
+  checkboxTextChecked: {
+    color: '#808080',
+    fontSize: 14
+  },
   deleteButton: {
     height: 32,
     width: 32,

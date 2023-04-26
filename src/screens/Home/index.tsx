@@ -1,18 +1,64 @@
 import { useState } from 'react';
-import { View, Text, Image, TextInput, TouchableOpacity, FlatList, TouchableHighlight } from 'react-native';
-import { Feather } from '@expo/vector-icons'; 
-
+import { View, Text, Image, TextInput, TouchableOpacity, FlatList, TouchableHighlight, Alert } from 'react-native';
+import { Feather } from '@expo/vector-icons';
 import { styles } from './styles';
-
 import { Task } from '../../components/Task';
-
 import logo from '../../assets/logo.png';
 import clipboard from '../../assets/clipboard.png';
 
 export function Home() {
-  const [completedTasks, setcompletedTasks] = useState(0);
+  const [tasks, setTasks] = useState<Task[]>([]);
+  const [newTask, setNewTask] = useState<string>('');
+  const [completedTasks, setCompletedTasks] = useState<number>(0);
 
-  const tasks:any = [];
+  function handleNewTask() {
+    var exists = false;
+    for(var i = 0; i < tasks.length; i++) {
+      if (tasks[i].name == newTask) {
+        exists = true;
+      }
+    }
+
+    if (exists) {
+      return Alert.alert('Tarefa já adicionada', 'Você já adicionou essa tarefa.')
+    }
+
+    const newTaskArray = {
+      name: newTask,
+      completed: false
+    }
+    
+    setTasks(prevState => [...prevState, newTaskArray]);
+    setNewTask('');
+  }
+
+  function handleCompletedTasks(name: string) {
+    const taskIndex = tasks.findIndex((obj => obj.name == name));
+    tasks[taskIndex].completed = !tasks[taskIndex].completed;
+    handleTaskChange(tasks);
+  }
+
+  function handleTaskChange(tasks: Task[]) {
+    setCompletedTasks(tasks.filter((task) => task.completed == true).length);
+  }
+
+  function handleTaskRemove(name: string) {
+    const taskIndex = tasks.findIndex((obj => obj.name == name));
+
+    Alert.alert('Excluir tarefa', `Você confirma a exclusão da tarefa?`, [
+      {
+        text: 'Sim',
+        onPress: () => {
+          setTasks(prevState => prevState.filter(task => task !== tasks[taskIndex])),
+          handleTaskChange(tasks.filter(task => task !== tasks[taskIndex]))
+        }
+      },
+      {
+        text: 'Não',
+        style: 'cancel'
+      }
+    ])
+  }
 
   return (
     <View style={styles.container}>
@@ -26,12 +72,14 @@ export function Home() {
           style={styles.input}
           placeholder='Adicione uma nova tarefa'
           placeholderTextColor='#808080'
+          onChangeText={setNewTask}
+          value={newTask}
         />
 
         <TouchableHighlight
           style={styles.addButton}
           underlayColor='#4EA8DE'
-          onPress={() => {}}
+          onPress={handleNewTask}
         >
           <Feather name="plus-circle" size={20} color='#F2F2F2' />
         </TouchableHighlight>
@@ -50,9 +98,12 @@ export function Home() {
 
       <FlatList
         data={tasks}
-        keyExtractor={item => item.value}
+        keyExtractor={item => item.name}
         renderItem={({ item }) => (
-          <Task text={item.text}/>
+          <Task
+            task={item}
+            handleCompletedTasks={() => handleCompletedTasks(item.name)}
+            onRemove={() => handleTaskRemove(item.name)}/>
         )}
         showsVerticalScrollIndicator={false}
         ListEmptyComponent={() => (
