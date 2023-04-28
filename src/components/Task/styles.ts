@@ -17,7 +17,11 @@ export const styles = StyleSheet.create({
     flex: 1,
     marginLeft: 12,
   },
-  checkboxInnerIconStyle:{
+  checkboxIcon:{
+    borderWidth: 2,
+    borderColor: '#4EA8DE'
+  },
+  checkboxIconChecked:{
     borderWidth: 2,
     borderColor: '#5E60CE'
   },

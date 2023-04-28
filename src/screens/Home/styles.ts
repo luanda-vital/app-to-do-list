@@ -2,16 +2,26 @@ import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    backgroundColor: '#1A1A1A',
+    flex: 1
+  },
+  blackContainer:{
+    width: '100%',
     backgroundColor: '#0D0D0D',
-    paddingHorizontal: 24,
+    paddingTop: 36,
+    paddingBottom: 70
   },
   logo: {
-    marginTop: 64,
+    height: 32,
+    resizeMode: 'contain',
     alignSelf: 'center'
   },
+  contentContainer: {
+    flex: 1,
+    paddingHorizontal: 24,
+    marginTop: -27,
+  },
   inputContainer: {
-    marginTop: 40,
     flexDirection: 'row',
     alignItems: 'center'
   },
@@ -25,7 +35,7 @@ export const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#0D0D0D',
     borderRadius: 8,
-    margin: 4,
+    marginRight: 4,
     paddingHorizontal: 16
   },
   addButton: {
@@ -64,6 +74,9 @@ export const styles = StyleSheet.create({
     fontFamily: 'Inter_700Bold',
     color: '#8284FA',
     fontSize: 14
+  },
+  listContent:{
+    paddingBottom: 48,
   },
   listEmpty: {
     alignItems: 'center',

@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { View, TouchableHighlight } from "react-native";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import { Feather } from '@expo/vector-icons';
@@ -15,6 +16,7 @@ type Props = {
 }
 
 export function Task({task, handleCompletedTasks, onRemove}: Props) {
+  const [underlay, setUnderlay] = useState(false);
 
   return(
     <View style={styles.container}>
@@ -23,17 +25,19 @@ export function Task({task, handleCompletedTasks, onRemove}: Props) {
         text={task.name}
         fillColor='#5E60CE'
         style={styles.checkbox}
-        innerIconStyle={styles.checkboxInnerIconStyle}
+        innerIconStyle={task.completed ? styles.checkboxIconChecked : styles.checkboxIcon}
         textStyle={task.completed ? styles.checkboxTextChecked : styles.checkboxText}
         onPress={handleCompletedTasks}
       />
 
       <TouchableHighlight
+        onHideUnderlay={() => setUnderlay(false)}
+        onShowUnderlay={() => setUnderlay(true)}
         style={styles.deleteButton}
         underlayColor='#333333'
         onPress={onRemove}
       >
-        <Feather name="trash-2" size={18} color='#808080' />
+        <Feather name="trash-2" size={18} color={underlay ? '#E25858' : '#808080' } />
       </TouchableHighlight>
     </View>
   )
